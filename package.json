@@ -8,11 +8,11 @@
     "dev": "node --watch src/server.js"
   },
   "dependencies": {
-    "@fastify/formbody": "^8.0.1",
-    "@fastify/websocket": "^10.0.1",
+    "@fastify/formbody": "^8.0.2",
+    "@fastify/websocket": "^11.2.0",
     "dotenv": "^16.4.5",
-    "fastify": "^4.28.1",
-    "ws": "^8.18.0",
-    "node-fetch": "^3.3.2"
+    "fastify": "^5.7.1",
+    "node-fetch": "^3.3.2",
+    "ws": "^8.18.0"
   }
 }
