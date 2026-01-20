@@ -21,6 +21,14 @@ app.post('/twilio/inbound-whatsapp', twilioInboundWhatsApp);
 app.all('/twilio/incoming-call', twilioIncomingCallHandler);
 registerTwilioMediaStreamRoute(app);
 
+import { telegramWebhookHandler } from './channels/telegram.js';
+
+// Telegram webhook
+app.post('/telegram/webhook', telegramWebhookHandler);
+
+// (необязательно, но удобно для проверки в браузере)
+app.get('/telegram/webhook', async () => ({ ok: true, message: 'telegram webhook alive' }));
+
 app.listen({ port: CONFIG.port, host: '0.0.0.0' })
   .then(() => console.log(`Server listening on :${CONFIG.port}`))
   .catch((err) => { console.error(err); process.exit(1); });
