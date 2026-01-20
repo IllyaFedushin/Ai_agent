@@ -23,9 +23,6 @@ registerTwilioMediaStreamRoute(app);
 
 import { telegramWebhookHandler } from './channels/telegram.js';
 
-// Telegram webhook
-app.post('/telegram/webhook', telegramWebhookHandler);
-
 // (необязательно, но удобно для проверки в браузере)
 app.get('/telegram/webhook', async () => ({ ok: true, message: 'telegram webhook alive' }));
 
