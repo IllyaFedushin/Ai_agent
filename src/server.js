@@ -29,11 +29,11 @@ app.listen({ port: CONFIG.port, host: '0.0.0.0' })
   .catch((err) => { console.error(err); process.exit(1); });
 
 // --- Telegram Webhook (debug + production) ---
-fastify.get('/telegram/webhook', async (request, reply) => {
+app.get('/telegram/webhook', async (request, reply) => {
   return { ok: true, message: 'Telegram webhook endpoint is alive' };
 });
 
-fastify.post('/telegram/webhook', async (request, reply) => {
+app.post('/telegram/webhook', async (request, reply) => {
   console.log('TG UPDATE:', JSON.stringify(request.body));
 
   // Telegram expects 200 OK quickly
