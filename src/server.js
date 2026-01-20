@@ -21,8 +21,6 @@ app.post('/twilio/inbound-whatsapp', twilioInboundWhatsApp);
 app.all('/twilio/incoming-call', twilioIncomingCallHandler);
 registerTwilioMediaStreamRoute(app);
 
-import { telegramWebhookHandler } from './channels/telegram.js';
-
 // (необязательно, но удобно для проверки в браузере)
 app.get('/telegram/webhook', async () => ({ ok: true, message: 'telegram webhook alive' }));
 
