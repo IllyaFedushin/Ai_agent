@@ -1,34 +1,19 @@
 import { crmClient } from '../crm/crmClient.js';
 import { CONFIG } from '../config.js';
 
-/**
- * ✅ Tools format for OpenAI Responses API:
- * Each tool must have:
- * - type: "function"
- * - name: "toolName"        <-- IMPORTANT (top-level)
- * - description
- * - parameters (JSON Schema)
- */
+// ✅ Responses API format: name/description/parameters at top-level
 export const TOOL_DEFS = [
   {
     type: "function",
     name: "getWorkingHours",
     description: "Рабочие часы клиники",
-    parameters: {
-      type: "object",
-      properties: {},
-      additionalProperties: false
-    }
+    parameters: { type: "object", properties: {}, additionalProperties: false }
   },
   {
     type: "function",
     name: "getPriceList",
     description: "Прайс-лист",
-    parameters: {
-      type: "object",
-      properties: {},
-      additionalProperties: false
-    }
+    parameters: { type: "object", properties: {}, additionalProperties: false }
   },
   {
     type: "function",
@@ -36,9 +21,7 @@ export const TOOL_DEFS = [
     description: "Найти записи по телефону",
     parameters: {
       type: "object",
-      properties: {
-        phone: { type: "string", description: "Телефон клиента в любом формате" }
-      },
+      properties: { phone: { type: "string" } },
       required: ["phone"],
       additionalProperties: false
     }
@@ -50,12 +33,12 @@ export const TOOL_DEFS = [
     parameters: {
       type: "object",
       properties: {
-        phone: { type: "string", description: "Телефон клиента" },
-        name: { type: "string", description: "Имя клиента" },
-        service: { type: "string", description: "Услуга/процедура" },
-        startISO: { type: "string", description: "Начало записи в ISO (например 2026-01-21T10:00:00+02:00)" },
-        endISO: { type: "string", description: "Конец записи в ISO (например 2026-01-21T10:30:00+02:00)" },
-        notes: { type: "string", description: "Комментарий/примечания" }
+        phone: { type: "string" },
+        name: { type: "string" },
+        service: { type: "string" },
+        startISO: { type: "string" },
+        endISO: { type: "string" },
+        notes: { type: "string" }
       },
       required: ["phone", "service", "startISO", "endISO"],
       additionalProperties: false
@@ -68,9 +51,9 @@ export const TOOL_DEFS = [
     parameters: {
       type: "object",
       properties: {
-        appointmentId: { type: "string", description: "ID записи" },
-        startISO: { type: "string", description: "Новое начало в ISO" },
-        endISO: { type: "string", description: "Новой конец в ISO" }
+        appointmentId: { type: "string" },
+        startISO: { type: "string" },
+        endISO: { type: "string" }
       },
       required: ["appointmentId", "startISO", "endISO"],
       additionalProperties: false
@@ -82,9 +65,7 @@ export const TOOL_DEFS = [
     description: "Отменить запись",
     parameters: {
       type: "object",
-      properties: {
-        appointmentId: { type: "string", description: "ID записи" }
-      },
+      properties: { appointmentId: { type: "string" } },
       required: ["appointmentId"],
       additionalProperties: false
     }
