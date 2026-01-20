@@ -8,35 +8,35 @@ import { twilioInboundSms, twilioInboundWhatsApp } from './channels/twilioMessag
 import { twilioIncomingCallHandler, registerTwilioMediaStreamRoute } from './channels/twilioVoiceRealtime.js';
 
 const app = Fastify({ logger: true });
+
 app.register(fastifyFormBody);
 app.register(fastifyWs);
 
-app.get('/', async () => ({ ok: true, name: 'Dental AI Agent', time: new Date().toISOString() }));
+// healthcheck
+app.get('/', async () => ({
+  ok: true,
+  name: 'Dental AI Agent',
+  time: new Date().toISOString()
+}));
+
+// Telegram webhook
+app.get('/telegram/webhook', async () => ({
+  ok: true,
+  message: 'Telegram webhook endpoint is alive'
+}));
 
 app.post('/telegram/webhook', telegramWebhookHandler);
 
+// Twilio
 app.post('/twilio/inbound-sms', twilioInboundSms);
 app.post('/twilio/inbound-whatsapp', twilioInboundWhatsApp);
-
 app.all('/twilio/incoming-call', twilioIncomingCallHandler);
 registerTwilioMediaStreamRoute(app);
 
-// (необязательно, но удобно для проверки в браузере)
-app.get('/telegram/webhook', async () => ({ ok: true, message: 'telegram webhook alive' }));
-
+// ❗️LISTEN — ВСЕГДА В САМОМ КОНЦЕ
 app.listen({ port: CONFIG.port, host: '0.0.0.0' })
-  .then(() => console.log(`Server listening on :${CONFIG.port}`))
-  .catch((err) => { console.error(err); process.exit(1); });
-
-// --- Telegram Webhook (debug + production) ---
-app.get('/telegram/webhook', async (request, reply) => {
-  return { ok: true, message: 'Telegram webhook endpoint is alive' };
-});
-
-app.post('/telegram/webhook', async (request, reply) => {
-  console.log('TG UPDATE:', JSON.stringify(request.body));
-
-  // Telegram expects 200 OK quickly
-  return { ok: true };
-});
-
+  .then(() => console.log(`Server listening on ${CONFIG.port}`))
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
